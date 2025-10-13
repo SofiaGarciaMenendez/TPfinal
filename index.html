@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cecilia Petersen | Fotografía</title>
+  
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav class="navbar">
+      <!-- Botón hamburguesa móvil -->
+      <button class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Logo / Nombre -->
+      <div class="logo">
+        <a href="index.html">
+          <h1>CECILIA PETERSEN</h1>
+          <p>Photography</p>
+        </a>
+      </div>
+
+      <!-- Navegación -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="#series">SERIES</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Overlay para menú móvil -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <img src="images/FotoCeci1.jpg" alt="Cecilia Petersen Fotografía">
+    <div class="hero-content">
+      <h2>Camino y veo fotos</h2>
+      <p>Un universo de contrastes, luces y sombras</p>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about-section" id="about">
+    <div class="about-container">
+      <div class="about-text">
+        <h2>Sobre Mí</h2>
+        <p>Soy fotógrafa y Licenciada en Comunicación por la Universidad de Buenos Aires. Nací en Argentina en 1973 y actualmente vivo en Buenos Aires junto a mi familia.</p>
+        <p>La fotografía es para mí una forma de vida. Camino y veo fotos. Viajo y veo fotos. Respiro y veo fotos.</p>
+        <p>Cuando fotografío, persigo un sentimiento. Me gusta que mis fotos tengan clima, que transmitan sensaciones y que transporten a aquello que veo.</p>
+        <p>Bienvenidos a mi mundo: un universo de contrastes, de luces y sombras, como la vida misma. De silencios, melodías y texturas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERIES SECTION -->
+  <section class="series-section" id="series">
+    <h2 class="section-title">SERIES FOTOGRÁFICAS</h2>
+    
+    <div class="series-grid">
+      <!-- Serie 1: Agua -->
+      <div class="series-item">
+        <img src="images/S-agua1.jpg" alt="Serie Agua">
+        <div class="series-overlay">
+          <h3>Agua</h3>
+          <p>El agua nunca se detiene. Fluye, erosiona, transforma.</p>
+        </div>
+      </div>
+
+      <!-- Serie 2: Belleza de lo Simple -->
+      <div class="series-item">
+        <img src="images/S-bellezadelosimple1.jpg" alt="Serie La Belleza de lo Simple">
+        <div class="series-overlay">
+          <h3>La Belleza de lo Simple</h3>
+          <p>En lo cotidiano habita la belleza.</p>
+        </div>
+      </div>
+
+      <!-- Serie 3: El Puerto -->
+      <div class="series-item">
+        <img src="images/S-elpuerto1.jpg" alt="Serie El Puerto">
+        <div class="series-overlay">
+          <h3>El Puerto</h3>
+          <p>Garopaba, Brasil. La quietud también cuenta historias.</p>
+        </div>
+      </div>
+
+      <!-- Serie 4: Entre Montes -->
+      <div class="series-item">
+        <img src="images/S-entremontes1.jpg" alt="Serie Entre Montes">
+        <div class="series-overlay">
+          <h3>Entre Montes</h3>
+          <p>La luz se filtra con suavidad entre los árboles.</p>
+        </div>
+      </div>
+
+      <!-- Serie 5: La Piel de lo Eterno -->
+      <div class="series-item">
+        <img src="images/S-spieldeloeterno1.jpg" alt="Serie La Piel de lo Eterno">
+        <div class="series-overlay">
+          <h3>La Piel de lo Eterno</h3>
+          <p>Cuerpos entrelazados, conexión profunda.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER / CONTACT -->
+  <footer id="contact">
+    <div class="footer-content">
+      <div class="footer-info">
+        <h3>Contacto</h3>
+        <p>Email: cecilia@petersen.com</p>
+        <p>Instagram: @ceciliapetersen</p>
+        <p>Buenos Aires, Argentina</p>
+      </div>
+
+      <div class="footer-form">
+        <h3>Escribime</h3>
+        <form id="contactForm">
+          <input type="text" name="nombre" placeholder="Nombre" required>
+          <input type="email" name="email" placeholder="Email" required>
+          <textarea name="mensaje" placeholder="Mensaje" rows="4" required></textarea>
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Cecilia Petersen Photography</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
