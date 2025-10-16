@@ -1,11 +1,10 @@
 console.log("Cecilia Petersen Photography - Sitio cargado correctamente");
 
-// ===== MENÚ  =====
+// ===== MENÚ MÓVIL =====
 const menuToggle = document.getElementById('menuToggle');
 const navLinks = document.getElementById('navLinks');
 const overlay = document.getElementById('overlay');
 
-// Abrir/cerrar menú al hacer click en el botón hamburguesa
 if (menuToggle) {
   menuToggle.addEventListener('click', () => {
     navLinks.classList.toggle('active');
@@ -13,7 +12,6 @@ if (menuToggle) {
   });
 }
 
-// Cerrar menú al hacer click en el overlay (fondo oscuro)
 if (overlay) {
   overlay.addEventListener('click', () => {
     navLinks.classList.remove('active');
@@ -21,7 +19,6 @@ if (overlay) {
   });
 }
 
-// Cerrar menú al hacer click en un link (para móvil)
 const navLinksItems = document.querySelectorAll('.nav-links a');
 navLinksItems.forEach(link => {
   link.addEventListener('click', () => {
@@ -31,7 +28,6 @@ navLinksItems.forEach(link => {
 });
 
 // ===== SMOOTH SCROLL =====
-// Para que cuando hagas click en los links del menú, se deslice suavemente
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
@@ -45,6 +41,24 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+// ===== FUNCIONES DE LOCALSTORAGE =====
+function obtenerMensajes() {
+  const mensajesGuardados = localStorage.getItem('mensajesCecilia');
+  return mensajesGuardados ? JSON.parse(mensajesGuardados) : [];
+}
+
+function guardarMensajes(mensajes) {
+  localStorage.setItem('mensajesCecilia', JSON.stringify(mensajes));
+}
+
+function obtenerFecha() {
+  const hoy = new Date();
+  const dia = String(hoy.getDate()).padStart(2, '0');
+  const mes = String(hoy.getMonth() + 1).padStart(2, '0');
+  const año = hoy.getFullYear();
+  return dia + "/" + mes + "/" + año;
+}
+
 // ===== FORMULARIO DE CONTACTO =====
 const contactForm = document.getElementById('contactForm');
 
@@ -52,15 +66,37 @@ if (contactForm) {
   contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // Obtener los valores del formulario
     const nombre = contactForm.querySelector('input[name="nombre"]').value;
     const email = contactForm.querySelector('input[name="email"]').value;
     const mensaje = contactForm.querySelector('textarea[name="mensaje"]').value;
     
-    // Mostrar mensaje de confirmación
-    alert(`Gracias ${nombre}! Tu mensaje ha sido enviado correctamente.`);
+    if (!nombre || !email || !mensaje) {
+      alert("⚠️ Por favor completa todos los campos");
+      return;
+    }
     
-    // Limpiar el formulario
+    const mensajes = obtenerMensajes();
+    
+    const nuevoId = mensajes.length > 0 
+      ? Math.max(...mensajes.map(m => m.id)) + 1 
+      : 0;
+    
+    const nuevoMensaje = {
+      id: nuevoId,
+      nombre: nombre,
+      email: email,
+      mensaje: mensaje,
+      fecha: obtenerFecha(),
+      leido: false
+    };
+    
+    mensajes.push(nuevoMensaje);
+    guardarMensajes(mensajes);
+    
+    alert(`✅ ¡Gracias ${nombre}! Tu mensaje ha sido enviado correctamente.\n\nPodrás verlo en el panel de administración.`);
+    
     contactForm.reset();
+    
+    console.log("Mensaje guardado:", nuevoMensaje);
   });
 }
