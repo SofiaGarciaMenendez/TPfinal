@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Mensajes | Cecilia Petersen</title>
+  
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    .admin-container {
+      padding: 10rem 5% 6rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .admin-title {
+      font-family: var(--fuente-titulo);
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      letter-spacing: 3px;
+    }
+    
+    .admin-section {
+      background: white;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+    }
+    
+    .admin-section h3 {
+      font-family: var(--fuente-titulo);
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--color-principal);
+    }
+    
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--color-secundario);
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: var(--fuente-texto);
+      font-size: 1rem;
+    }
+    
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .form-group input[type="checkbox"] {
+      width: auto;
+      margin-right: 0.5rem;
+    }
+    
+    .btn {
+      padding: 0.8rem 2rem;
+      background-color: var(--color-principal);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      transition: background-color 0.3s;
+      font-family: var(--fuente-texto);
+    }
+    
+    .btn:hover {
+      background-color: var(--color-secundario);
+    }
+    
+    .lista-mensajes {
+      background-color: #f9f9f9;
+      padding: 1.5rem;
+      border-radius: 4px;
+      font-family: monospace;
+      white-space: pre-line;
+      min-height: 200px;
+      line-height: 1.8;
+      color: var(--color-principal);
+    }
+    
+    .input-inline {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+    
+    .input-inline .form-group {
+      flex: 1;
+    }
+    
+    @media (max-width: 768px) {
+      .input-inline {
+        flex-direction: column;
+      }
+      
+      .admin-container {
+        padding: 8rem 5% 4rem;
+      }
+      
+      .admin-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav class="navbar">
+      <!-- Botón hamburguesa móvil -->
+      <button class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <!-- Logo / Nombre -->
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/Logoceci.jpeg" alt="Logo CP" class="logo-icon">
+          <div class="logo-text">
+            <h1>CECILIA PETERSEN</h1>
+            <p>Photography</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Navegación -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="series.html">SERIES</a></li>
+        <li><a href="index.html#about">ABOUT</a></li>
+        <li><a href="index.html#contact">CONTACT</a></li>
+        <li><a href="admin.html">ADMIN</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Overlay para menú móvil -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ADMIN CONTAINER -->
+  <div class="admin-container">
+    <h2 class="admin-title">PANEL DE ADMINISTRACIÓN</h2>
+    
+    <!-- SECCIÓN: AGREGAR MENSAJE -->
+    <div class="admin-section">
+      <h3>Agregar Mensaje</h3>
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" id="nombre" placeholder="Nombre completo">
+      </div>
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="email@ejemplo.com">
+      </div>
+      <div class="form-group">
+        <label>Mensaje:</label>
+        <textarea id="mensaje" placeholder="Escribe el mensaje aquí..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>
+          <input type="checkbox" id="leido">
+          Marcar como leído
+        </label>
+      </div>
+      <button class="btn" id="botonAgregar">Agregar Mensaje</button>
+    </div>
+
+    <!-- SECCIÓN: ELIMINAR MENSAJE -->
+    <div class="admin-section">
+      <h3>🗑️ Eliminar Mensaje</h3>
+      <div class="input-inline">
+        <div class="form-group">
+          <label>ID del mensaje a eliminar:</label>
+          <input type="number" id="eliminar" placeholder="0">
+        </div>
+        <button class="btn" id="botonEliminar">Eliminar</button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN: MARCAR COMO LEÍDO -->
+    <div class="admin-section">
+      <h3>✅ Marcar como Leído</h3>
+      <div class="input-inline">
+        <div class="form-group">
+          <label>ID del mensaje:</label>
+          <input type="number" id="marcado" placeholder="0">
+        </div>
+        <button class="btn" id="botonMarcado">Marcar Leído</button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN: FILTRAR MENSAJES -->
+    <div class="admin-section">
+      <h3>🔍 Filtrar Mensajes</h3>
+      <div class="input-inline">
+        <div class="form-group">
+          <label>Estado:</label>
+          <select id="filtrar">
+            <option value="todos">Todos</option>
+            <option value="leidos">Leídos</option>
+            <option value="no-leidos">No Leídos</option>
+          </select>
+        </div>
+        <button class="btn" id="botonFiltrar">Filtrar</button>
+      </div>
+      <div class="lista-mensajes" id="filtrados"></div>
+    </div>
+
+    <!-- SECCIÓN: BUSCAR POR NOMBRE O EMAIL -->
+    <div class="admin-section">
+      <h3>🔎 Buscar por Nombre o Email</h3>
+      <div class="input-inline">
+        <div class="form-group">
+          <label>Buscar:</label>
+          <input type="text" id="buscar" placeholder="Nombre o email">
+        </div>
+        <button class="btn" id="botonBuscar">Buscar</button>
+      </div>
+      <div class="lista-mensajes" id="buscados"></div>
+    </div>
+
+    <!-- SECCIÓN: LISTA COMPLETA -->
+    <div class="admin-section">
+      <h3>📋 Todos los Mensajes</h3>
+      <div class="lista-mensajes" id="lista"></div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Cecilia Petersen Photography - Panel Admin</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+  <script src="admin.js"></script>
+</body>
+</html>
