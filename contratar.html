@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contratar Servicios | Cecilia Petersen</title>
+  
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  
+  <style>
+    .contratar-container {
+      padding: 10rem 5% 6rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .contratar-title {
+      font-family: var(--fuente-titulo);
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      letter-spacing: 3px;
+    }
+    
+    .contratar-subtitle {
+      text-align: center;
+      color: var(--color-secundario);
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    
+    .form-box {
+      background: white;
+      padding: 3rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--color-secundario);
+    }
+    
+    .form-group label span {
+      color: #c62828;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.9rem;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-family: var(--fuente-texto);
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--color-beige);
+    }
+    
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .btn-submit {
+      width: 100%;
+      padding: 1rem 2rem;
+      background-color: var(--color-principal);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      transition: background-color 0.3s;
+      font-family: var(--fuente-texto);
+      margin-top: 1rem;
+    }
+    
+    .btn-submit:hover {
+      background-color: var(--color-secundario);
+    }
+    
+    .info-box {
+      background-color: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: 4px;
+    }
+    
+    .info-box h3 {
+      font-family: var(--fuente-titulo);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--color-principal);
+    }
+    
+    .info-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    .info-box li {
+      margin-bottom: 0.5rem;
+      color: var(--color-secundario);
+    }
+    
+    .info-box li::before {
+      content: "✓ ";
+      color: #2196f3;
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .form-box {
+        padding: 2rem 1.5rem;
+      }
+      
+      .contratar-container {
+        padding: 8rem 5% 4rem;
+      }
+      
+      .contratar-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER -->
+  <header>
+    <nav class="navbar">
+      <button class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/logoceci.png" alt="Logo CP" class="logo-icon">
+          <div class="logo-text">
+            <h1>CECILIA PETERSEN</h1>
+            <p>Photography</p>
+          </div>
+        </a>
+      </div>
+
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="series.html">SERIES</a></li>
+        <li><a href="index.html#about">ABOUT</a></li>
+        <li><a href="contratar.html">CONTRATAR</a></li>
+        <li><a href="index.html#contact">CONTACT</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- FORMULARIO DE CONTRATACIÓN -->
+  <div class="contratar-container">
+    <h1 class="contratar-title">CONTRATAR SERVICIOS</h1>
+    <p class="contratar-subtitle">Completá el formulario y me pondré en contacto con vos a la brevedad para coordinar los detalles de tu sesión fotográfica.</p>
+    
+    <!-- INFO BOX -->
+    <div class="info-box">
+      <h3>Servicios Disponibles</h3>
+      <ul>
+        <li>Sesiones fotográficas personales y familiares</li>
+        <li>Bodas y eventos sociales</li>
+        <li>Eventos corporativos</li>
+        <li>Fotografía de producto</li>
+        <li>Retratos artísticos</li>
+      </ul>
+    </div>
+
+    <!-- FORMULARIO -->
+    <div class="form-box">
+      <form id="contratarForm">
+        <div class="form-group">
+          <label>Nombre Completo <span>*</span></label>
+          <input type="text" id="nombre" placeholder="Tu nombre completo" required>
+        </div>
+
+        <div class="form-group">
+          <label>Email <span>*</span></label>
+          <input type="email" id="email" placeholder="tu@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label>Teléfono <span>*</span></label>
+          <input type="tel" id="telefono" placeholder="+54 11 1234-5678" required>
+        </div>
+
+        <div class="form-group">
+          <label>Tipo de Servicio <span>*</span></label>
+          <select id="tipoServicio" required>
+            <option value="">Seleccioná un servicio</option>
+            <option value="Sesión Personal">Sesión Personal</option>
+            <option value="Sesión Familiar">Sesión Familiar</option>
+            <option value="Boda">Boda</option>
+            <option value="Evento Social">Evento Social</option>
+            <option value="Evento Corporativo">Evento Corporativo</option>
+            <option value="Fotografía de Producto">Fotografía de Producto</option>
+            <option value="Retrato Artístico">Retrato Artístico</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Fecha Deseada <span>*</span></label>
+          <input type="date" id="fecha" required>
+        </div>
+
+        <div class="form-group">
+          <label>Detalles Adicionales</label>
+          <textarea id="detalles" placeholder="Contanos más sobre lo que necesitás..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Enviar Solicitud</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Cecilia Petersen Photography</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="contratar.js"></script>
+</body>
+</html>

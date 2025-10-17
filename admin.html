@@ -3,18 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - Mensajes | Cecilia Petersen</title>
+  <title>Admin - Solicitudes | Cecilia Petersen</title>
   
-  <!-- Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
-  
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
   
   <style>
     .admin-container {
       padding: 10rem 5% 6rem;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
     }
     
@@ -53,7 +50,6 @@
     }
     
     .form-group input,
-    .form-group textarea,
     .form-group select {
       width: 100%;
       padding: 0.8rem;
@@ -61,16 +57,6 @@
       border-radius: 4px;
       font-family: var(--fuente-texto);
       font-size: 1rem;
-    }
-    
-    .form-group textarea {
-      min-height: 100px;
-      resize: vertical;
-    }
-    
-    .form-group input[type="checkbox"] {
-      width: auto;
-      margin-right: 0.5rem;
     }
     
     .btn {
@@ -90,7 +76,7 @@
       background-color: var(--color-secundario);
     }
     
-    .lista-mensajes {
+    .lista-solicitudes {
       background-color: #f9f9f9;
       padding: 1.5rem;
       border-radius: 4px;
@@ -99,6 +85,7 @@
       min-height: 200px;
       line-height: 1.8;
       color: var(--color-principal);
+      overflow-x: auto;
     }
     
     .input-inline {
@@ -109,6 +96,49 @@
     
     .input-inline .form-group {
       flex: 1;
+    }
+    
+    .admin-info {
+      background-color: #e3f2fd;
+      border-left: 4px solid #2196f3;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-radius: 4px;
+    }
+    
+    .admin-info p {
+      margin: 0;
+      color: var(--color-secundario);
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      border-left: 4px solid var(--color-beige);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .stat-card h4 {
+      font-size: 0.9rem;
+      color: var(--color-secundario);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .stat-card p {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--color-principal);
+      margin: 0;
     }
     
     @media (max-width: 768px) {
@@ -123,25 +153,26 @@
       .admin-title {
         font-size: 2rem;
       }
+      
+      .lista-solicitudes {
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
 
 <body>
-  <!-- HEADER -->
   <header>
     <nav class="navbar">
-      <!-- Botón móvil -->
       <button class="menu-toggle" id="menuToggle">
         <span></span>
         <span></span>
         <span></span>
       </button>
 
-      <!-- pongo logo con su  Nombre -->
       <div class="logo">
         <a href="index.html">
-          <img src="images/Logoceci.jpeg" alt="Logo CP" class="logo-icon">
+          <img src="images/logoceci.png" alt="Logo CP" class="logo-icon">
           <div class="logo-text">
             <h1>CECILIA PETERSEN</h1>
             <p>Photography</p>
@@ -149,92 +180,104 @@
         </a>
       </div>
 
-      <!-- Navegación -->
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">HOME</a></li>
         <li><a href="series.html">SERIES</a></li>
         <li><a href="index.html#about">ABOUT</a></li>
+        <li><a href="contratar.html">CONTRATAR</a></li>
         <li><a href="index.html#contact">CONTACT</a></li>
-        <li><a href="admin.html">ADMIN</a></li>
       </ul>
     </nav>
   </header>
 
-  <!--  menú móvil -->
   <div class="overlay" id="overlay"></div>
 
-  <!-- ADMIN CONTAINER -->
   <div class="admin-container">
     <h2 class="admin-title">PANEL DE ADMINISTRACIÓN</h2>
     
-    <!-- SECCIÓN: AGREGAR MENSAJE -->
-    <div class="admin-section">
-      <h3>Agregar Mensaje</h3>
-      <div class="form-group">
-        <label>Nombre:</label>
-        <input type="text" id="nombre" placeholder="Nombre completo">
-      </div>
-      <div class="form-group">
-        <label>Email:</label>
-        <input type="email" id="email" placeholder="email@ejemplo.com">
-      </div>
-      <div class="form-group">
-        <label>Mensaje:</label>
-        <textarea id="mensaje" placeholder="Escribe el mensaje aquí..."></textarea>
-      </div>
-      <div class="form-group">
-        <label>
-          <input type="checkbox" id="leido">
-          Marcar como leído
-        </label>
-      </div>
-      <button class="btn" id="botonAgregar">Agregar Mensaje</button>
+    <div class="admin-info">
+      <p>🔒 Panel privado - Gestión de solicitudes de servicios fotográficos</p>
     </div>
 
-    <!-- SECCIÓN: ELIMINAR MENSAJE -->
+    <!-- ESTADÍSTICAS -->
+    <div class="stats">
+      <div class="stat-card">
+        <h4>Total Solicitudes</h4>
+        <p id="statTotal">0</p>
+      </div>
+      <div class="stat-card">
+        <h4>Pendientes</h4>
+        <p id="statPendientes">0</p>
+      </div>
+      <div class="stat-card">
+        <h4>Confirmadas</h4>
+        <p id="statConfirmadas">0</p>
+      </div>
+      <div class="stat-card">
+        <h4>Rechazadas</h4>
+        <p id="statRechazadas">0</p>
+      </div>
+    </div>
+
+    <!-- LISTA COMPLETA -->
     <div class="admin-section">
-      <h3> Eliminar Mensaje</h3>
+      <h3>📋 Todas las Solicitudes</h3>
+      <div class="lista-solicitudes" id="lista"></div>
+    </div>
+
+    <!-- CAMBIAR ESTADO -->
+    <div class="admin-section">
+      <h3>🔄 Cambiar Estado de Solicitud</h3>
       <div class="input-inline">
         <div class="form-group">
-          <label>ID del mensaje a eliminar:</label>
+          <label>ID de la solicitud:</label>
+          <input type="number" id="idEstado" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label>Nuevo estado:</label>
+          <select id="nuevoEstado">
+            <option value="Pendiente">Pendiente</option>
+            <option value="Confirmada">Confirmada</option>
+            <option value="Rechazada">Rechazada</option>
+          </select>
+        </div>
+        <button class="btn" id="botonEstado">Cambiar Estado</button>
+      </div>
+    </div>
+
+    <!-- ELIMINAR SOLICITUD -->
+    <div class="admin-section">
+      <h3>🗑️ Eliminar Solicitud</h3>
+      <div class="input-inline">
+        <div class="form-group">
+          <label>ID de la solicitud a eliminar:</label>
           <input type="number" id="eliminar" placeholder="0">
         </div>
         <button class="btn" id="botonEliminar">Eliminar</button>
       </div>
     </div>
 
-    <!-- SECCIÓN: MARCAR COMO LEÍDO -->
+    <!-- FILTRAR POR ESTADO -->
     <div class="admin-section">
-      <h3> Marcar como Leído</h3>
-      <div class="input-inline">
-        <div class="form-group">
-          <label>ID del mensaje:</label>
-          <input type="number" id="marcado" placeholder="0">
-        </div>
-        <button class="btn" id="botonMarcado">Marcar Leído</button>
-      </div>
-    </div>
-
-    <!-- SECCIÓN: FILTRAR MENSAJES -->
-    <div class="admin-section">
-      <h3> Filtrar Mensajes</h3>
+      <h3>🔍 Filtrar por Estado</h3>
       <div class="input-inline">
         <div class="form-group">
           <label>Estado:</label>
           <select id="filtrar">
-            <option value="todos">Todos</option>
-            <option value="leidos">Leídos</option>
-            <option value="no-leidos">No Leídos</option>
+            <option value="todos">Todas</option>
+            <option value="Pendiente">Pendientes</option>
+            <option value="Confirmada">Confirmadas</option>
+            <option value="Rechazada">Rechazadas</option>
           </select>
         </div>
         <button class="btn" id="botonFiltrar">Filtrar</button>
       </div>
-      <div class="lista-mensajes" id="filtrados"></div>
+      <div class="lista-solicitudes" id="filtradas"></div>
     </div>
 
-    <!-- SECCIÓN: BUSCAR POR NOMBRE O EMAIL -->
+    <!-- BUSCAR POR NOMBRE -->
     <div class="admin-section">
-      <h3> Buscar por Nombre o Email</h3>
+      <h3>🔎 Buscar por Nombre o Email</h3>
       <div class="input-inline">
         <div class="form-group">
           <label>Buscar:</label>
@@ -242,25 +285,17 @@
         </div>
         <button class="btn" id="botonBuscar">Buscar</button>
       </div>
-      <div class="lista-mensajes" id="buscados"></div>
-    </div>
-
-    <!-- SECCIÓN: LISTA COMPLETA -->
-    <div class="admin-section">
-      <h3> Todos los Mensajes</h3>
-      <div class="lista-mensajes" id="lista"></div>
+      <div class="lista-solicitudes" id="buscadas"></div>
     </div>
 
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <div class="footer-bottom">
       <p>&copy; 2025 Cecilia Petersen Photography - Panel Admin</p>
     </div>
   </footer>
 
-  <!-- JavaScript -->
   <script src="script.js"></script>
   <script src="admin.js"></script>
 </body>

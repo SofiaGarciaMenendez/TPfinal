@@ -1,35 +1,33 @@
 // ===== FUNCIONES DE LOCALSTORAGE =====
-function obtenerMensajes() {
-  const mensajesGuardados = localStorage.getItem('mensajesCecilia');
-  return mensajesGuardados ? JSON.parse(mensajesGuardados) : [];
+function obtenerSolicitudes() {
+  const solicitudesGuardadas = localStorage.getItem('solicitudesCecilia');
+  return solicitudesGuardadas ? JSON.parse(solicitudesGuardadas) : [];
 }
 
-function guardarMensajes(mensajesArray) {
-  localStorage.setItem('mensajesCecilia', JSON.stringify(mensajesArray));
+function guardarSolicitudes(solicitudesArray) {
+  localStorage.setItem('solicitudesCecilia', JSON.stringify(solicitudesArray));
 }
 
 // ===== VARIABLES GLOBALES =====
-let id = 0;
-let mensajes = obtenerMensajes(); // Cargar desde localStorage
+let solicitudes = obtenerSolicitudes();
 
 const lista = document.getElementById("lista");
-const filtrados = document.getElementById("filtrados");
-const buscados = document.getElementById("buscados");
+const filtradas = document.getElementById("filtradas");
+const buscadas = document.getElementById("buscadas");
 
 // ===== FUNCIONES AUXILIARES =====
 
-function linea(m) {
-  return m.id + " | " + m.nombre + " | " + m.email + " | " + m.mensaje.substring(0, 50) + "... | " + m.fecha + " | " + (m.leido ? "LEÍDO" : "NO LEÍDO");
+function linea(s) {
+  return s.id + " | " + s.nombre + " | " + s.email + " | " + s.telefono + " | " + s.tipoServicio + " | " + s.fechaEvento + " | " + s.estado;
 }
-
 
 function imprimirLista(titulo, arr, salida) {
   let texto = titulo + "\n\n";
   if (arr.length === 0) {
-    texto += "📭 No hay mensajes";
+    texto += "📭 No hay solicitudes";
   } else {
-    texto += "ID | NOMBRE | EMAIL | MENSAJE | FECHA | ESTADO\n";
-    texto += "─".repeat(80) + "\n";
+    texto += "ID | NOMBRE | EMAIL | TELÉFONO | SERVICIO | FECHA EVENTO | ESTADO\n";
+    texto += "─".repeat(100) + "\n";
     for (let i = 0; i < arr.length; i++) {
       texto += linea(arr[i]) + "\n";
     }
@@ -37,72 +35,61 @@ function imprimirLista(titulo, arr, salida) {
   salida.textContent = texto;
 }
 
+function actualizarEstadisticas() {
+  const total = solicitudes.length;
+  const pendientes = solicitudes.filter(s => s.estado === 'Pendiente').length;
+  const confirmadas = solicitudes.filter(s => s.estado === 'Confirmada').length;
+  const rechazadas = solicitudes.filter(s => s.estado === 'Rechazada').length;
+  
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statPendientes').textContent = pendientes;
+  document.getElementById('statConfirmadas').textContent = confirmadas;
+  document.getElementById('statRechazadas').textContent = rechazadas;
+}
+
 function render() {
-  imprimirLista("📬 TODOS LOS MENSAJES", mensajes, lista);
-  console.log("Estado actual:", mensajes);
+  imprimirLista("📬 TODAS LAS SOLICITUDES", solicitudes, lista);
+  actualizarEstadisticas();
+  console.log("Estado actual:", solicitudes);
 }
 
 function corregirIndices() {
-  mensajes.forEach(function(m, i) {
-    return m.id = i;
+  solicitudes.forEach(function(s, i) {
+    return s.id = i;
   });
-  id = mensajes.length;
-  guardarMensajes(mensajes); // Guardar en localStorage
-}
-
-
-function obtenerFecha() {
-  const hoy = new Date();
-  const dia = String(hoy.getDate()).padStart(2, '0');
-  const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-  const año = hoy.getFullYear();
-  return dia + "/" + mes + "/" + año;
+  guardarSolicitudes(solicitudes);
 }
 
 // ===== FUNCIONES CRUD =====
 
-// AGREGAR MENSAJE
-function agregarMensaje() {
-  const nombre = document.getElementById("nombre").value;
-  const email = document.getElementById("email").value;
-  const mensaje = document.getElementById("mensaje").value;
-  const leido = document.getElementById("leido").checked;
-
-  // Validación
-  if (!nombre || !email || !mensaje) {
-    alert("⚠️ Por favor completa todos los campos");
+// CAMBIAR ESTADO
+function cambiarEstado() {
+  const idSolicitud = document.getElementById("idEstado").value;
+  const nuevoEstado = document.getElementById("nuevoEstado").value;
+  
+  if (idSolicitud === "") {
+    alert("⚠️ Por favor ingresa un ID");
     return;
   }
 
+  let i = solicitudes.findIndex(function(s) {
+    return String(s.id) === idSolicitud;
+  });
 
-  const nuevoId = mensajes.length > 0 
-    ? Math.max(...mensajes.map(m => m.id)) + 1 
-    : 0;
+  if (i === -1) {
+    alert("❌ No existe una solicitud con ese ID");
+    return;
+  }
 
-  let objeto = {
-    id: nuevoId,
-    nombre: nombre,
-    email: email,
-    mensaje: mensaje,
-    fecha: obtenerFecha(),
-    leido: leido
-  };
-
-  mensajes.push(objeto);
-  guardarMensajes(mensajes); // Guardar en localStorage
+  solicitudes[i].estado = nuevoEstado;
+  guardarSolicitudes(solicitudes);
   render();
-
-  // Limpiar formulario
-  document.getElementById("nombre").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("mensaje").value = "";
-  document.getElementById("leido").checked = false;
-
-  alert("✅ Mensaje agregado correctamente");
+  document.getElementById("idEstado").value = "";
+  alert(`✅ Estado cambiado a: ${nuevoEstado}`);
 }
 
-// ELIMINAR MENSAJE
-function eliminarMensaje() {
+// ELIMINAR SOLICITUD
+function eliminarSolicitud() {
   const idAEliminar = document.getElementById("eliminar").value;
   
   if (idAEliminar === "") {
@@ -110,70 +97,43 @@ function eliminarMensaje() {
     return;
   }
 
-  let i = mensajes.findIndex(function(m) {
-    return String(m.id) === idAEliminar;
+  let i = solicitudes.findIndex(function(s) {
+    return String(s.id) === idAEliminar;
   });
 
   if (i === -1) {
-    alert("❌ No existe un mensaje con ese ID");
+    alert("❌ No existe una solicitud con ese ID");
     return;
   }
 
-  mensajes.splice(i, 1);
-  corregirIndices();
-  guardarMensajes(mensajes); // Guardar en localStorage
-  render();
-  document.getElementById("eliminar").value = "";
-  alert("✅ Mensaje eliminado correctamente");
+  if (confirm("¿Estás segura de que querés eliminar esta solicitud?")) {
+    solicitudes.splice(i, 1);
+    corregirIndices();
+    guardarSolicitudes(solicitudes);
+    render();
+    document.getElementById("eliminar").value = "";
+    alert("✅ Solicitud eliminada correctamente");
+  }
 }
 
-// MARCAR COMO LEÍDO
-function marcarLeido() {
-  let idAMarcar = document.getElementById("marcado").value;
-  
-  if (idAMarcar === "") {
-    alert("⚠️ Por favor ingresa un ID");
-    return;
-  }
-
-  let i = mensajes.findIndex(function(m) {
-    return String(m.id) === idAMarcar;
-  });
-
-  if (i === -1) {
-    alert("❌ No existe un mensaje con ese ID");
-    return;
-  }
-
-  mensajes[i].leido = true;
-  guardarMensajes(mensajes); // Guardar en localStorage
-  render();
-  document.getElementById("marcado").value = "";
-  alert("✅ Mensaje marcado como leído");
-}
-
-// FILTRAR MENSAJES
-function filtrarMensajes() {
+// FILTRAR SOLICITUDES
+function filtrarSolicitudes() {
   let filtro = document.getElementById("filtrar").value;
-  let mensajesFiltrados = [];
+  let solicitudesFiltradas = [];
 
   if (filtro === "todos") {
-    mensajesFiltrados = mensajes;
-  } else if (filtro === "leidos") {
-    mensajesFiltrados = mensajes.filter(function(m) {
-      return m.leido === true;
-    });
-  } else if (filtro === "no-leidos") {
-    mensajesFiltrados = mensajes.filter(function(m) {
-      return m.leido === false;
+    solicitudesFiltradas = solicitudes;
+  } else {
+    solicitudesFiltradas = solicitudes.filter(function(s) {
+      return s.estado === filtro;
     });
   }
 
-  imprimirLista("🔍 MENSAJES FILTRADOS", mensajesFiltrados, filtrados);
+  imprimirLista("🔍 SOLICITUDES FILTRADAS", solicitudesFiltradas, filtradas);
 }
 
 // BUSCAR POR NOMBRE O EMAIL
-function buscarMensajes() {
+function buscarSolicitudes() {
   const termino = document.getElementById("buscar").value.toLowerCase();
   
   if (termino === "") {
@@ -181,32 +141,29 @@ function buscarMensajes() {
     return;
   }
 
-  const mensajesBuscados = mensajes.filter(function(m) {
-    return m.nombre.toLowerCase().includes(termino) || 
-           m.email.toLowerCase().includes(termino);
+  const solicitudesBuscadas = solicitudes.filter(function(s) {
+    return s.nombre.toLowerCase().includes(termino) || 
+           s.email.toLowerCase().includes(termino);
   });
 
-  imprimirLista("🔎 RESULTADOS DE BÚSQUEDA", mensajesBuscados, buscados);
+  imprimirLista("🔎 RESULTADOS DE BÚSQUEDA", solicitudesBuscadas, buscadas);
 }
 
 // ===== EVENT LISTENERS =====
 
-const botonAgregar = document.getElementById("botonAgregar");
-botonAgregar.addEventListener("click", agregarMensaje);
+const botonEstado = document.getElementById("botonEstado");
+botonEstado.addEventListener("click", cambiarEstado);
 
 const botonEliminar = document.getElementById("botonEliminar");
-botonEliminar.addEventListener("click", eliminarMensaje);
-
-const botonMarcar = document.getElementById("botonMarcado");
-botonMarcar.addEventListener("click", marcarLeido);
+botonEliminar.addEventListener("click", eliminarSolicitud);
 
 const botonFiltrar = document.getElementById("botonFiltrar");
-botonFiltrar.addEventListener("click", filtrarMensajes);
+botonFiltrar.addEventListener("click", filtrarSolicitudes);
 
 const botonBuscar = document.getElementById("botonBuscar");
-botonBuscar.addEventListener("click", buscarMensajes);
+botonBuscar.addEventListener("click", buscarSolicitudes);
 
 // ===== INICIALIZACIÓN =====
-console.log("Sistema de mensajes cargado correctamente");
-console.log("Mensajes cargados desde localStorage:", mensajes.length);
+console.log("Sistema de administración cargado correctamente");
+console.log("Solicitudes cargadas desde localStorage:", solicitudes.length);
 render();
