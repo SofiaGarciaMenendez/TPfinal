@@ -87,14 +87,17 @@ header {
   color: var(--color-principal);
 }
 
-/* Botón (móvil) */
-.menu-toggle {
-  display: none;
-  flex-direction: column;
-  background: none;
-  border: none;
-  cursor: pointer;
-  gap: 5px;
+/* Asegurar que el menú hamburguesa solo se vea en móvil */
+@media (min-width: 769px) {
+  .menu-toggle {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
 }
 
 .menu-toggle span {
@@ -156,12 +159,12 @@ header {
   font-weight: 300;
 }
 
-/* ===== ABOUT SECTION ===== */
 .about-section {
   padding: 8rem 5%;
   max-width: 1200px;
   margin: 0 auto;
   background-color: var(--color-blanco);
+  scroll-margin-top: 100px; /* NUEVO: espacio para el header */
 }
 
 .about-container {
