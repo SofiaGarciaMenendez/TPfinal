@@ -24,7 +24,7 @@ function linea(s) {
 function imprimirLista(titulo, arr, salida) {
   let texto = titulo + "\n\n";
   if (arr.length === 0) {
-    texto += " No hay solicitudes";
+    texto += "No hay solicitudes";
   } else {
     texto += "ID | NOMBRE | EMAIL | TELÉFONO | SERVICIO | FECHA EVENTO | ESTADO\n";
     texto += "─".repeat(100) + "\n";
@@ -48,7 +48,7 @@ function actualizarEstadisticas() {
 }
 
 function render() {
-  imprimirLista(" TODAS LAS SOLICITUDES", solicitudes, lista);
+  imprimirLista("TODAS LAS SOLICITUDES", solicitudes, lista);
   actualizarEstadisticas();
   console.log("Estado actual:", solicitudes);
 }
@@ -102,7 +102,7 @@ function eliminarSolicitud() {
   });
 
   if (i === -1) {
-    alert(" No existe una solicitud con ese ID");
+    alert("❌ No existe una solicitud con ese ID");
     return;
   }
 
@@ -112,7 +112,7 @@ function eliminarSolicitud() {
     guardarSolicitudes(solicitudes);
     render();
     document.getElementById("eliminar").value = "";
-    alert(" Solicitud eliminada correctamente");
+    alert("✅ Solicitud eliminada correctamente");
   }
 }
 
@@ -129,10 +129,10 @@ function filtrarSolicitudes() {
     });
   }
 
-  imprimirLista("🔍 SOLICITUDES FILTRADAS", solicitudesFiltradas, filtradas);
+  imprimirLista("SOLICITUDES FILTRADAS", solicitudesFiltradas, filtradas);
 }
 
-// BUSCAR POR NOMBRE O EMAIL
+// BUSCAR POR NOMBRE O EMAIL (BÚSQUEDA EXACTA - PALABRA COMPLETA)
 function buscarSolicitudes() {
   const termino = document.getElementById("buscar").value.toLowerCase();
   
@@ -141,12 +141,14 @@ function buscarSolicitudes() {
     return;
   }
 
+  // Crear expresión regular para buscar palabra completa
+  const regex = new RegExp("\\b" + termino + "\\b", "i");
+
   const solicitudesBuscadas = solicitudes.filter(function(s) {
-    return s.nombre.toLowerCase().includes(termino) || 
-           s.email.toLowerCase().includes(termino);
+    return regex.test(s.nombre) || regex.test(s.email);
   });
 
-  imprimirLista(" RESULTADOS DE BÚSQUEDA", solicitudesBuscadas, buscadas);
+  imprimirLista("RESULTADOS DE BÚSQUEDA", solicitudesBuscadas, buscadas);
 }
 
 // ===== EVENT LISTENERS =====

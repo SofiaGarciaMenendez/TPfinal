@@ -1,5 +1,3 @@
- <!-- REEVER ESTO SOFI!!! css incluido en el html -->
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,208 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Series | Cecilia Petersen</title>
   
-  <!-- Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
-  
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
-  
-  <style>
-    /* Estilos específicos para la página de series */
-    .series-detail-section {
-      padding: 10rem 5% 6rem;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-    
-    .series-detail-item {
-      margin-bottom: 8rem;
-      padding-bottom: 6rem;
-      border-bottom: 1px solid #e0e0e0;
-    }
-    
-    .series-detail-item:last-child {
-      border-bottom: none;
-    }
-    
-    .series-detail-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    
-    .series-detail-header h2 {
-      font-family: var(--fuente-titulo);
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      letter-spacing: 3px;
-      color: var(--color-principal);
-    }
-    
-    .series-detail-header p {
-      font-size: 1.2rem;
-      color: var(--color-secundario);
-      font-style: italic;
-      max-width: 800px;
-      margin: 0 auto;
-      line-height: 1.8;
-    }
-    
-    .series-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    
-    .series-gallery-item {
-      position: relative;
-      overflow: hidden;
-      aspect-ratio: 4/3;
-      cursor: pointer;
-    }
-    
-    .series-gallery-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.5s ease;
-      filter: grayscale(20%);
-    }
-    
-    .series-gallery-item:hover img {
-      transform: scale(1.08);
-      filter: grayscale(0%);
-    }
-    
-    /* Modal para ver imágenes en grande */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 2000;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.95);
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .modal.active {
-      display: flex;
-    }
-    
-    .modal-content {
-      max-width: 90%;
-      max-height: 90%;
-      object-fit: contain;
-    }
-    
-    .modal-close {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-      font-size: 3rem;
-      color: white;
-      cursor: pointer;
-      z-index: 2001;
-      background: none;
-      border: none;
-      font-weight: 300;
-      transition: transform 0.2s;
-    }
-    
-    .modal-close:hover {
-      transform: scale(1.1);
-    }
-    
-    .page-title {
-      text-align: center;
-      margin-bottom: 1rem;
-      padding-top: 3rem;
-    }
-    
-    .page-title h1 {
-      font-family: var(--fuente-titulo);
-      font-size: 3.5rem;
-      letter-spacing: 4px;
-      color: var(--color-principal);
-    }
-    
-    .page-subtitle {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: var(--color-secundario);
-      font-size: 1.1rem;
-    }
-    
-    @media (max-width: 768px) {
-      .series-detail-header h2 {
-        font-size: 2rem;
-      }
-      
-      .series-detail-header p {
-        font-size: 1rem;
-      }
-      
-      .page-title h1 {
-        font-size: 2.2rem;
-      }
-      
-      .series-gallery {
-        grid-template-columns: 1fr;
-      }
-      
-      .series-detail-section {
-        padding: 8rem 5% 4rem;
-      }
-    }
-  </style>
 </head>
 
 <body>
   <header>
-  <nav class="navbar">
-    <!-- Logo / Nombre -->
-    <div class="logo">
-      <a href="index.html">
-        <img src="images/logoceci.png" alt="Logo CP" class="logo-icon">
-        <div class="logo-text">
-          <h1>CECILIA PETERSEN</h1>
-          <p>Photography</p>
-        </div>
-      </a>
-    </div>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="index.html">
+          <img src="images/logoceci.png" alt="Logo CP" class="logo-icon">
+          <div class="logo-text">
+            <h1>CECILIA PETERSEN</h1>
+            <p>Photography</p>
+          </div>
+        </a>
+      </div>
 
-    <!-- Navegación -->
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">HOME</a></li>
-      <li><a href="series.html">SERIES</a></li>
-      <li><a href="index.html#about">ABOUT</a></li>
-      <li><a href="contratar.html">HIRE</a></li>
-      <li><a href="index.html#contact">CONTACT</a></li>
-    </ul>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="series.html">SERIES</a></li>
+        <li><a href="index.html#about">ABOUT</a></li>
+        <li><a href="contratar.html">HIRE</a></li>
+        <li><a href="index.html#contact">CONTACT</a></li>
+      </ul>
 
-    <!-- Botón móvil -->
-    <button class="menu-toggle" id="menuToggle">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </nav>
-</header>
+      <button class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
 
-  <!-- Overlay para menú móvil -->
   <div class="overlay" id="overlay"></div>
 
-  <!-- TÍTULO DE LA PÁGINA -->
   <section class="series-detail-section">
     <div class="page-title">
       <h1>SERIES FOTOGRÁFICAS</h1>
     </div>
     <p class="page-subtitle">Un recorrido visual por mis trabajos</p>
 
-    <!-- SERIE 1: AGUA -->
     <div class="series-detail-item">
       <div class="series-detail-header">
         <h2>Agua</h2>
@@ -227,7 +64,6 @@
       </div>
     </div>
 
-    <!-- SERIE 2: LA BELLEZA DE LO SIMPLE -->
     <div class="series-detail-item">
       <div class="series-detail-header">
         <h2>La Belleza de lo Simple</h2>
@@ -252,7 +88,6 @@
       </div>
     </div>
 
-    <!-- SERIE 3: EL PUERTO -->
     <div class="series-detail-item">
       <div class="series-detail-header">
         <h2>El Puerto</h2>
@@ -283,7 +118,6 @@
       </div>
     </div>
 
-    <!-- SERIE 4: ENTRE MONTES -->
     <div class="series-detail-item">
       <div class="series-detail-header">
         <h2>Entre Montes</h2>
@@ -305,7 +139,6 @@
       </div>
     </div>
 
-    <!-- SERIE 5: LA PIEL DE LO ETERNO -->
     <div class="series-detail-item">
       <div class="series-detail-header">
         <h2>La Piel de lo Eterno</h2>
@@ -330,7 +163,6 @@
       </div>
     </div>
 
-    <!-- SERIE 6: RETRATOS -->
     <div class="series-detail-item">
       <div class="series-detail-header">
         <h2>Retratos</h2>
@@ -358,16 +190,15 @@
         <div class="series-gallery-item" onclick="openModal('images/S-retratos7.jpg')">
           <img src="images/S-retratos7.jpg" alt="Retratos 7">
         </div>
+      </div>
     </div>
   </section>
 
-  <!-- PARA VER LAS IMÁGENES -->
   <div class="modal" id="imageModal">
     <button class="modal-close" onclick="closeModal()">&times;</button>
     <img class="modal-content" id="modalImage" alt="Imagen ampliada">
   </div>
 
-  <!-- FOOTER -->
   <footer id="contact">
     <div class="footer-content">
       <div class="footer-info">
@@ -393,38 +224,7 @@
     </div>
   </footer>
 
-  <!-- JavaScript -->
   <script src="script.js"></script>
-  <script>
-    // Función para abrir modal con imagen
-    function openModal(imageSrc) {
-      const modal = document.getElementById('imageModal');
-      const modalImg = document.getElementById('modalImage');
-      modal.classList.add('active');
-      modalImg.src = imageSrc;
-      document.body.style.overflow = 'hidden';
-    }
-
-    // Función para cerrar modal
-    function closeModal() {
-      const modal = document.getElementById('imageModal');
-      modal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-
-    // Cerrar modal con tecla ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeModal();
-      }
-    });
-
-    // Cerrar modal al hacer click fuera de la imagen
-    document.getElementById('imageModal').addEventListener('click', (e) => {
-      if (e.target.classList.contains('modal')) {
-        closeModal();
-      }
-    });
-  </script>
+  <script src="series.js"></script>
 </body>
 </html>
