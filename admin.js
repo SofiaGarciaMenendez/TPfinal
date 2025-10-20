@@ -24,7 +24,7 @@ function linea(s) {
 function imprimirLista(titulo, arr, salida) {
   let texto = titulo + "\n\n";
   if (arr.length === 0) {
-    texto += "📭 No hay solicitudes";
+    texto += " No hay solicitudes";
   } else {
     texto += "ID | NOMBRE | EMAIL | TELÉFONO | SERVICIO | FECHA EVENTO | ESTADO\n";
     texto += "─".repeat(100) + "\n";
@@ -48,7 +48,7 @@ function actualizarEstadisticas() {
 }
 
 function render() {
-  imprimirLista("📬 TODAS LAS SOLICITUDES", solicitudes, lista);
+  imprimirLista(" TODAS LAS SOLICITUDES", solicitudes, lista);
   actualizarEstadisticas();
   console.log("Estado actual:", solicitudes);
 }
@@ -102,7 +102,7 @@ function eliminarSolicitud() {
   });
 
   if (i === -1) {
-    alert("❌ No existe una solicitud con ese ID");
+    alert(" No existe una solicitud con ese ID");
     return;
   }
 
@@ -112,7 +112,7 @@ function eliminarSolicitud() {
     guardarSolicitudes(solicitudes);
     render();
     document.getElementById("eliminar").value = "";
-    alert("✅ Solicitud eliminada correctamente");
+    alert(" Solicitud eliminada correctamente");
   }
 }
 
@@ -146,7 +146,7 @@ function buscarSolicitudes() {
            s.email.toLowerCase().includes(termino);
   });
 
-  imprimirLista("🔎 RESULTADOS DE BÚSQUEDA", solicitudesBuscadas, buscadas);
+  imprimirLista(" RESULTADOS DE BÚSQUEDA", solicitudesBuscadas, buscadas);
 }
 
 // ===== EVENT LISTENERS =====

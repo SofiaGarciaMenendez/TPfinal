@@ -64,7 +64,7 @@ header {
 }
 
 .logo-text p {
-  font-size: 1rem;   /* Era 0.8rem */
+  font-size: 1rem;
   letter-spacing: 1px;
   color: var(--color-secundario);
 }
@@ -87,17 +87,14 @@ header {
   color: var(--color-principal);
 }
 
-/* Asegurar que el menú hamburguesa solo se vea en móvil */
-@media (min-width: 769px) {
-  .menu-toggle {
-    display: none !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: flex;
-  }
+/* Botón (móvil) */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 5px;
 }
 
 .menu-toggle span {
@@ -159,12 +156,13 @@ header {
   font-weight: 300;
 }
 
+/* ===== ABOUT SECTION ===== */
 .about-section {
   padding: 8rem 5%;
   max-width: 1200px;
   margin: 0 auto;
   background-color: var(--color-blanco);
-  scroll-margin-top: 100px; /* NUEVO: espacio para el header */
+  scroll-margin-top: 100px;
 }
 
 .about-container {
@@ -205,9 +203,9 @@ header {
 
 /* ===== SERIES SECTION ===== */
 .series-section {
-  padding: 8rem 5%; /* CAMBIO: más espacio (era 6rem) */
+  padding: 8rem 5%;
   background-color: var(--color-fondo);
-  border-top: 1px solid #e0e0e0; /* NUEVO: línea sutil arriba */
+  border-top: 1px solid #e0e0e0;
 }
 
 .section-title {
@@ -385,44 +383,6 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  @media (max-width: 768px) {
-  .menu-toggle {
-    display: flex;
-  }
-
-  .nav-links {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    height: 100vh;
-    width: 70%;
-    background-color: var(--color-blanco);
-    flex-direction: column;
-    padding: 5rem 2rem;
-    transition: right 0.3s ease;
-    z-index: 1000;
-  }
-
-  .nav-links.active {
-    right: 0;
-  }
-
-  .overlay.active {
-    display: block;
-  }
-
-  .hero-content h2 {
-    font-size: 2rem;
-  }
-
-  .hero-content p {
-    font-size: 1rem;
-  }
-
-  .series-grid {
-    grid-template-columns: 1fr;
-  }
-
   .about-container {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -431,6 +391,7 @@ footer {
   .about-image {
     position: static;
   }
+
   .logo-icon {
     width: 30px;
     height: 30px;
@@ -439,5 +400,4 @@ footer {
   .logo-text h1 {
     font-size: 1.2rem;
   }
-}
 }

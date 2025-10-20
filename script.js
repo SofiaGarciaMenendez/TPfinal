@@ -52,7 +52,7 @@ if (contactForm) {
     const email = contactForm.querySelector('input[name="email"]').value;
     const mensaje = contactForm.querySelector('textarea[name="mensaje"]').value;
     
-    alert(`✅ ¡Gracias ${nombre}! Tu mensaje ha sido enviado correctamente.`);
+    alert(`¡Gracias ${nombre}! Tu mensaje ha sido enviado correctamente.`);
     
     contactForm.reset();
   });
