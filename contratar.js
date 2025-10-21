@@ -1,11 +1,11 @@
-// ===== FUNCIONES DE LOCALSTORAGE =====
+// ===== FUNCIONES DE SESSIONSTORAGE =====
 function obtenerSolicitudes() {
-  const solicitudesGuardadas = localStorage.getItem('solicitudesCecilia');
+  const solicitudesGuardadas = sessionStorage.getItem('solicitudesCecilia');
   return solicitudesGuardadas ? JSON.parse(solicitudesGuardadas) : [];
 }
 
 function guardarSolicitudes(solicitudes) {
-  localStorage.setItem('solicitudesCecilia', JSON.stringify(solicitudes));
+  sessionStorage.setItem('solicitudesCecilia', JSON.stringify(solicitudes));
 }
 
 function obtenerFecha() {
