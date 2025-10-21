@@ -346,10 +346,15 @@ footer {
 /* ===== CONTRATAR PAGE ===== */
 .contratar-container {
   padding: 10rem 5% 6rem;
-  max-width: 800px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
+.crud-section {
+  margin-top: 4rem;
+  padding-top: 4rem;
+  border-top: 2px solid #e0e0e0;
+}
 .contratar-title {
   font-family: var(--fuente-titulo);
   font-size: 2.5rem;

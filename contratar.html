@@ -30,8 +30,8 @@
 
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">HOME</a></li>
-        <li><a href="series.html">SERIES</a></li>
         <li><a href="index.html#about">ABOUT</a></li>
+        <li><a href="series.html">SERIES</a></li>
         <li><a href="contratar.html">HIRE</a></li>
         <li><a href="index.html#contact">CONTACT</a></li>
       </ul>
@@ -55,7 +55,9 @@
       </ul>
     </div>
 
+    <!-- FORMULARIO DE SOLICITUD -->
     <div class="form-box">
+      <h2 style="font-family: var(--fuente-titulo); margin-bottom: 2rem; color: var(--color-principal);">Crear Nueva Solicitud</h2>
       <form id="contratarForm">
         <div class="form-group">
           <label>Nombre Completo <span>*</span></label>
@@ -99,6 +101,100 @@
 
         <button type="submit" class="btn-submit">Enviar Solicitud</button>
       </form>
+    </div>
+
+    <!-- SECCIÓN DE GESTIÓN DE SOLICITUDES -->
+    <div class="crud-section">
+      <h2 style="font-family: var(--fuente-titulo); font-size: 2rem; text-align: center; margin-bottom: 2rem; color: var(--color-principal);">Mis Solicitudes</h2>
+
+      <!-- ESTADÍSTICAS -->
+      <div class="stats">
+        <div class="stat-card">
+          <h4>Total Solicitudes</h4>
+          <p id="statTotal">0</p>
+        </div>
+        <div class="stat-card">
+          <h4>Pendientes</h4>
+          <p id="statPendientes">0</p>
+        </div>
+        <div class="stat-card">
+          <h4>Confirmadas</h4>
+          <p id="statConfirmadas">0</p>
+        </div>
+        <div class="stat-card">
+          <h4>Rechazadas</h4>
+          <p id="statRechazadas">0</p>
+        </div>
+      </div>
+
+      <!-- LISTA DE SOLICITUDES -->
+      <div class="admin-section">
+        <h3>Todas Tus Solicitudes</h3>
+        <div class="lista-solicitudes" id="lista"></div>
+      </div>
+
+      <!-- CAMBIAR ESTADO -->
+      <div class="admin-section">
+        <h3>Cambiar Estado de Tu Solicitud</h3>
+        <div class="input-inline">
+          <div class="form-group">
+            <label>ID de la solicitud:</label>
+            <input type="number" id="idEstado" placeholder="0" min="0">
+          </div>
+          <div class="form-group">
+            <label>Nuevo estado:</label>
+            <select id="nuevoEstado">
+              <option value="Pendiente">Pendiente</option>
+              <option value="Confirmada">Confirmada</option>
+              <option value="Rechazada">Rechazada</option>
+            </select>
+          </div>
+          <button class="btn" id="botonEstado">Cambiar Estado</button>
+        </div>
+      </div>
+
+      <!-- ELIMINAR SOLICITUD -->
+      <div class="admin-section">
+        <h3>Eliminar Solicitud</h3>
+        <div class="input-inline">
+          <div class="form-group">
+            <label>ID de la solicitud a eliminar:</label>
+            <input type="number" id="eliminar" placeholder="0" min="0">
+          </div>
+          <button class="btn" id="botonEliminar">Eliminar</button>
+        </div>
+      </div>
+
+      <!-- FILTRAR POR ESTADO -->
+      <div class="admin-section">
+        <h3>Filtrar por Estado</h3>
+        <div class="input-inline">
+          <div class="form-group">
+            <label>Estado:</label>
+            <select id="filtrar">
+              <option value="todos">Todas</option>
+              <option value="Pendiente">Pendientes</option>
+              <option value="Confirmada">Confirmadas</option>
+              <option value="Rechazada">Rechazadas</option>
+            </select>
+          </div>
+          <button class="btn" id="botonFiltrar">Filtrar</button>
+        </div>
+        <div class="lista-solicitudes" id="filtradas"></div>
+      </div>
+
+      <!-- BUSCAR POR NOMBRE O EMAIL -->
+      <div class="admin-section">
+        <h3>Buscar por Nombre o Email</h3>
+        <div class="input-inline">
+          <div class="form-group">
+            <label>Buscar:</label>
+            <input type="text" id="buscar" placeholder="Nombre o email">
+          </div>
+          <button class="btn" id="botonBuscar">Buscar</button>
+        </div>
+        <div class="lista-solicitudes" id="buscadas"></div>
+      </div>
     </div>
   </div>
 

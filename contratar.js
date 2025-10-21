@@ -16,11 +16,62 @@ function obtenerFecha() {
   return dia + "/" + mes + "/" + año;
 }
 
-// ===== FORMULARIO DE CONTRATACIÓN =====
+// ===== VARIABLES GLOBALES =====
+let solicitudes = obtenerSolicitudes();
+
+const lista = document.getElementById("lista");
+const filtradas = document.getElementById("filtradas");
+const buscadas = document.getElementById("buscadas");
+
+// ===== FUNCIONES AUXILIARES =====
+
+function linea(s) {
+  return s.id + " | " + s.nombre + " | " + s.email + " | " + s.telefono + " | " + s.tipoServicio + " | " + s.fechaEvento + " | " + s.estado;
+}
+
+function imprimirLista(titulo, arr, salida) {
+  let texto = titulo + "\n\n";
+  if (arr.length === 0) {
+    texto += "No hay solicitudes";
+  } else {
+    texto += "ID | NOMBRE | EMAIL | TELÉFONO | SERVICIO | FECHA EVENTO | ESTADO\n";
+    texto += "─".repeat(100) + "\n";
+    for (let i = 0; i < arr.length; i++) {
+      texto += linea(arr[i]) + "\n";
+    }
+  }
+  salida.textContent = texto;
+}
+
+function actualizarEstadisticas() {
+  const total = solicitudes.length;
+  const pendientes = solicitudes.filter(s => s.estado === 'Pendiente').length;
+  const confirmadas = solicitudes.filter(s => s.estado === 'Confirmada').length;
+  const rechazadas = solicitudes.filter(s => s.estado === 'Rechazada').length;
+  
+  document.getElementById('statTotal').textContent = total;
+  document.getElementById('statPendientes').textContent = pendientes;
+  document.getElementById('statConfirmadas').textContent = confirmadas;
+  document.getElementById('statRechazadas').textContent = rechazadas;
+}
+
+function render() {
+  imprimirLista("TODAS TUS SOLICITUDES", solicitudes, lista);
+  actualizarEstadisticas();
+  console.log("Estado actual:", solicitudes);
+}
+
+function corregirIndices() {
+  solicitudes.forEach(function(s, i) {
+    return s.id = i;
+  });
+  guardarSolicitudes(solicitudes);
+}
+
+// ===== CREAR SOLICITUD (CREATE) =====
 const contratarForm = document.getElementById('contratarForm');
 
 if (contratarForm) {
-  // Establecer fecha mínima (hoy)
   const fechaInput = document.getElementById('fecha');
   const hoy = new Date().toISOString().split('T')[0];
   fechaInput.setAttribute('min', hoy);
@@ -28,7 +79,6 @@ if (contratarForm) {
   contratarForm.addEventListener('submit', (e) => {
     e.preventDefault();
     
-    // Obtener valores del formulario
     const nombre = document.getElementById('nombre').value;
     const email = document.getElementById('email').value;
     const telefono = document.getElementById('telefono').value;
@@ -36,25 +86,20 @@ if (contratarForm) {
     const fecha = document.getElementById('fecha').value;
     const detalles = document.getElementById('detalles').value;
     
-    // Validación
     if (!nombre || !email || !telefono || !tipoServicio || !fecha) {
       alert("⚠️ Por favor completa todos los campos obligatorios");
       return;
     }
     
-    // Obtener solicitudes existentes
-    const solicitudes = obtenerSolicitudes();
+    solicitudes = obtenerSolicitudes();
     
-    // Calcular nuevo ID
     const nuevoId = solicitudes.length > 0 
       ? Math.max(...solicitudes.map(s => s.id)) + 1 
       : 0;
     
-    // Formatear fecha de evento
     const fechaParts = fecha.split('-');
     const fechaFormateada = fechaParts[2] + '/' + fechaParts[1] + '/' + fechaParts[0];
     
-    // Crear nueva solicitud
     const nuevaSolicitud = {
       id: nuevoId,
       nombre: nombre,
@@ -67,18 +112,121 @@ if (contratarForm) {
       estado: 'Pendiente'
     };
     
-    // Agregar y guardar
     solicitudes.push(nuevaSolicitud);
     guardarSolicitudes(solicitudes);
     
-    // Mostrar confirmación
-    alert(`✅ ¡Gracias ${nombre}!\n\nTu solicitud ha sido enviada correctamente.\nTe contactaré a la brevedad para coordinar los detalles.\n\nServicio: ${tipoServicio}\nFecha: ${fechaFormateada}`);
+    alert(`✅ ¡Gracias ${nombre}!\n\nTu solicitud ha sido enviada correctamente.\n\nServicio: ${tipoServicio}\nFecha: ${fechaFormateada}`);
     
-    // Limpiar formulario
     contratarForm.reset();
+    render();
     
     console.log("Solicitud guardada:", nuevaSolicitud);
   });
 }
 
-console.log("Sistema de contratación cargado correctamente");
+// ===== CAMBIAR ESTADO (UPDATE) =====
+function cambiarEstado() {
+  const idSolicitud = document.getElementById("idEstado").value;
+  const nuevoEstado = document.getElementById("nuevoEstado").value;
+  
+  if (idSolicitud === "") {
+    alert("⚠️ Por favor ingresa un ID");
+    return;
+  }
+
+  let i = solicitudes.findIndex(function(s) {
+    return String(s.id) === idSolicitud;
+  });
+
+  if (i === -1) {
+    alert("❌ No existe una solicitud con ese ID");
+    return;
+  }
+
+  solicitudes[i].estado = nuevoEstado;
+  guardarSolicitudes(solicitudes);
+  render();
+  document.getElementById("idEstado").value = "";
+  alert(`✅ Estado cambiado a: ${nuevoEstado}`);
+}
+
+// ===== ELIMINAR SOLICITUD (DELETE) =====
+function eliminarSolicitud() {
+  const idAEliminar = document.getElementById("eliminar").value;
+  
+  if (idAEliminar === "") {
+    alert("⚠️ Por favor ingresa un ID");
+    return;
+  }
+
+  let i = solicitudes.findIndex(function(s) {
+    return String(s.id) === idAEliminar;
+  });
+
+  if (i === -1) {
+    alert("❌ No existe una solicitud con ese ID");
+    return;
+  }
+
+  if (confirm("¿Estás segura de que querés eliminar esta solicitud?")) {
+    solicitudes.splice(i, 1);
+    corregirIndices();
+    guardarSolicitudes(solicitudes);
+    render();
+    document.getElementById("eliminar").value = "";
+    alert("✅ Solicitud eliminada correctamente");
+  }
+}
+
+// ===== FILTRAR SOLICITUDES (READ CON FILTRO) =====
+function filtrarSolicitudes() {
+  let filtro = document.getElementById("filtrar").value;
+  let solicitudesFiltradas = [];
+
+  if (filtro === "todos") {
+    solicitudesFiltradas = solicitudes;
+  } else {
+    solicitudesFiltradas = solicitudes.filter(function(s) {
+      return s.estado === filtro;
+    });
+  }
+
+  imprimirLista("SOLICITUDES FILTRADAS", solicitudesFiltradas, filtradas);
+}
+
+// ===== BUSCAR POR NOMBRE O EMAIL (READ CON BÚSQUEDA) =====
+function buscarSolicitudes() {
+  const termino = document.getElementById("buscar").value.toLowerCase();
+  
+  if (termino === "") {
+    alert("⚠️ Por favor ingresa un término de búsqueda");
+    return;
+  }
+
+  const regex = new RegExp("\\b" + termino + "\\b", "i");
+
+  const solicitudesBuscadas = solicitudes.filter(function(s) {
+    return regex.test(s.nombre) || regex.test(s.email);
+  });
+
+  imprimirLista("RESULTADOS DE BÚSQUEDA", solicitudesBuscadas, buscadas);
+}
+
+// ===== EVENT LISTENERS =====
+
+const botonEstado = document.getElementById("botonEstado");
+botonEstado.addEventListener("click", cambiarEstado);
+
+const botonEliminar = document.getElementById("botonEliminar");
+botonEliminar.addEventListener("click", eliminarSolicitud);
+
+const botonFiltrar = document.getElementById("botonFiltrar");
+botonFiltrar.addEventListener("click", filtrarSolicitudes);
+
+const botonBuscar = document.getElementById("botonBuscar");
+botonBuscar.addEventListener("click", buscarSolicitudes);
+
+// ===== INICIALIZACIÓN =====
+console.log("Sistema de contratación con CRUD cargado correctamente");
+console.log("Solicitudes cargadas desde localStorage:", solicitudes.length);
+render();
